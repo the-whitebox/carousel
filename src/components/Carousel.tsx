@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFeatureContext } from "../context/FeatureContext";
 import Image from "next/image";
 import Skelton from "./Skelton";
@@ -8,11 +8,15 @@ const CarouselComp: React.FC = () => {
   const { features, loading, error } = state;
   const [currentSlide, setCurrentSlide] = useState(0);
   const cardsToShow = 4;
-  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
-  React.useEffect(() => {
+  const [screenWidth, setScreenWidth] = useState<number>(0);
+
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
